@@ -1,0 +1,14 @@
+# Logs
+*/*.log
+*.log
+*/npm-debug.log*
+
+# Node modules directory
+*/node_modules
+node_modules
+
+# Temporary directories
+*~
+
+# Dist file
+dist/
