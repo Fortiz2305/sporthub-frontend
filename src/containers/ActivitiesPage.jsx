@@ -113,29 +113,34 @@ class ActivitiesPage extends React.Component {
   * @param {object} activity - activity to delete
   */
   deleteActivity(activity) {
-    fetch(`http://${Config.backendURL}/api/v1/activities/name/${activity.name}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `bearer ${Auth.getToken()}`
-      }
-    })
-    .then((response) => {
-      return response.json()
-    })
-    .then((result) => {
-      if (result.success === true) {
-        this.setState({
-          errors: {},
-          successMessage: result.message
-        });
-      } else {
-        const errors = result.errors ? result.errors : {};
-        errors.summary = result.message;
-        this.setState({
-          errors
-        });
-      }
-    });
+    if (this.state.currentUser.name !== activity.users[0]) {
+      const errors = { 'summary': 'You are not able to delete this activity. You are not the activity owner'}
+      this.setState({ errors });
+    } else {
+      fetch(`http://${Config.backendURL}/api/v1/activities/name/${activity.name}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `bearer ${Auth.getToken()}`
+        }
+      })
+      .then((response) => {
+        return response.json()
+      })
+      .then((result) => {
+        if (result.success === true) {
+          this.setState({
+            errors: {},
+            successMessage: result.message
+          });
+        } else {
+          const errors = result.errors ? result.errors : {};
+          errors.summary = result.message;
+          this.setState({
+            errors
+          });
+        }
+      });
+    }
   }
 
   render() {
@@ -147,6 +152,7 @@ class ActivitiesPage extends React.Component {
             joinActivity={this.joinActivity}
             deleteActivity={this.deleteActivity}
             successMessage={this.state.successMessage}
+            errorMessage={this.state.errors.summary}
           />
         </div>
       )

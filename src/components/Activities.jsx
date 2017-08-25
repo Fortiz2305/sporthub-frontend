@@ -6,7 +6,8 @@ const Activities = ({
   activityList,
   joinActivity,
   deleteActivity,
-  successMessage
+  successMessage,
+  errorMessage
 }) => (
   <div>
     <div className="text-center activities_title">
@@ -37,7 +38,10 @@ const Activities = ({
         ))}
     </ol>
     <div className="join-success-message">
-        <span className="join-succes-message">{successMessage}</span>
+        <span className="join-success-message">{successMessage}</span>
+    </div>
+    <div className="error-message">
+        <span className="error-message">{errorMessage}</span>
     </div>
   </div>
 )
@@ -46,7 +50,8 @@ Activities.propTypes = {
   activityList: PropTypes.array.isRequired,
   joinActivity: PropTypes.func.isRequired,
   deleteActivity: PropTypes.func.isRequired,
-  successMessage: PropTypes.string.isRequired
+  successMessage: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string
 };
 
 export default Activities;
