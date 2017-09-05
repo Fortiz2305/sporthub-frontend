@@ -15,6 +15,10 @@ before_install:
   - source $HOME/google-cloud-sdk/path.bash.inc
   - source $HOME/google-cloud-sdk/completion.bash.inc
   - gcloud auth activate-service-account --key-file client-secret.json
+install:
+  - gcloud config set project first-discovery-166919
+  - gcloud config set compute/zone europe-west1
+  - gcloud compute instances list
 before_script:
 - npm install
 script:
